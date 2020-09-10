@@ -7,8 +7,8 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  getHello(): string {
-    return 'Hello Success!';
+  getHello(): CreateAccountDto[] {
+    return this.usersService.findAll();
   }
 
   @Post()
