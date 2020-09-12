@@ -1,4 +1,5 @@
-import { CreateAccountDto } from './dto/account.dto';
+import { ValidationPipe } from './../util/joi-validation.pipe';
+import { CreateAccountDto, CreateAccountSchema } from './dto/account.dto';
 import { UsersService } from './users.service';
 import { Controller, Get, Post, Body } from '@nestjs/common';
 
@@ -7,13 +8,15 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  getHello(): CreateAccountDto[] {
-    return this.usersService.findAll();
+  getUserList() {
+    return this.usersService.getUserList();
   }
 
   @Post()
-  create(@Body() createAccountDto: CreateAccountDto): string {
-    this.usersService.create(createAccountDto);
-    return 'import Success';
+  create(
+    @Body(new ValidationPipe(CreateAccountSchema))
+    createAccountDto: CreateAccountDto,
+  ) {
+    return this.usersService.create(createAccountDto);
   }
 }
