@@ -9,8 +9,12 @@ export class CreateAccountDto {
 }
 
 export const CreateAccountSchema = Joi.object({
-  fName: Joi.string().required(),
-  lName: Joi.string().required(),
+  fName: Joi.string()
+    .required()
+    .max(30),
+  lName: Joi.string()
+    .required()
+    .max(30),
   email: Joi.string().required(),
   phone: Joi.number().required(),
   code: Joi.number().required(),

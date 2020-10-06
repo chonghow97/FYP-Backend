@@ -12,7 +12,7 @@ export class UsersController {
     return this.usersService.getUserList();
   }
 
-  @Post()
+  @Post('register')
   create(
     @Body(new ValidationPipe(CreateAccountSchema))
     createAccountDto: CreateAccountDto,
