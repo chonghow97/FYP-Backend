@@ -1,5 +1,4 @@
 import * as Joi from 'joi';
-import { object } from 'joi';
 export class CreateAccountDto {
   readonly fName: string;
   readonly lName: string;
