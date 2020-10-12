@@ -34,7 +34,6 @@ export class HomestaysController {
     //save image
     
     //save database
-    // this.homestayService.create(context.Homestay);
-    console.log(file);
+    return this.homestayService.create(dto);
   }
 }

@@ -10,12 +10,13 @@ export class HomestaysService {
     @InjectModel(Homestay.name) private homestayModel: Model<Homestay>,
   ) {}
 
-  homestayList() {
-    return 'hello world';
+  async homestayList() {
+    return await this.homestayModel.find();
   }
 
   async create(payload) {
     const createdHomestay = new this.homestayModel(payload);
     createdHomestay.save();
+    return createdHomestay;
   }
 }
