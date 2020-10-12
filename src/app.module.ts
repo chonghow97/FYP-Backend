@@ -12,10 +12,8 @@ import { MulterModule } from '@nestjs/platform-express';
     UsersModule,
     HomestayModule,
     MongooseModule.forRoot(config.MongoURI),
-    MulterModule.registerAsync({
-      useFactory: () => ({
-        dest: '/upload',
-      }),
+    MulterModule.register({
+      dest: './uploads'
     }),
   ],
   controllers: [AppController],

@@ -5,12 +5,16 @@ import { Document } from 'mongoose';
 export class Homestay extends Document {
   @Prop({ required: true })
   name: String;
-  @Prop()
+  @Prop({ required: true })
   capacity: number;
-  @Prop()
+  @Prop({ required: true })
   description: string;
   @Prop()
   photo: String;
+  @Prop()
+  price: Number;
+  @Prop()
+  color: String;
 }
 
 export const HomestaySchema = SchemaFactory.createForClass(Homestay);

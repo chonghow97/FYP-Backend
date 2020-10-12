@@ -29,10 +29,12 @@ export class HomestaysController {
   @Post()
   @UseInterceptors(FileFieldsInterceptor([{ name: 'image' }]))
   post(@UploadedFiles() file, @Body() dto: HomestayDto) {
+    //rename image
+    file.image[0].originalname = new Date().getTime()+"_"+file.image[0].originalname;
     //save image
-
+    
     //save database
     // this.homestayService.create(context.Homestay);
-    console.log(file, dto);
+    console.log(file);
   }
 }
