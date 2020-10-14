@@ -1,6 +1,4 @@
-import { FilesInterceptor } from '@nestjs/platform-express/multer/interceptors/files.interceptor';
 import { HomestayDto } from './dto/homestay.dto';
-import { FilePipe } from './pipe/file.pipe';
 import { HomestaysService } from './homestays.service';
 import {
   Controller,
@@ -9,14 +7,10 @@ import {
   Post,
   UseInterceptors,
   Param,
-  ParseIntPipe,
   UploadedFiles,
-  UploadedFile,
-  Res,
+  Delete,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express/multer/interceptors/file-fields.interceptor';
-import { AnyFilesInterceptor } from '@nestjs/platform-express/multer/interceptors/any-files.interceptor';
-import { FileInterceptor } from '@nestjs/platform-express/multer/interceptors/file.interceptor';
 
 @Controller('homestays')
 export class HomestaysController {
@@ -25,6 +19,11 @@ export class HomestaysController {
   get() {
     return this.homestayService.homestayList();
   }
+
+  @Get(':id')
+async findOne(@Param() params) {
+    return await this.homestayService.findOne(params.id);
+}
 
   @Post()
   @UseInterceptors(FileFieldsInterceptor([{ name: 'image' }]))
@@ -35,5 +34,10 @@ export class HomestaysController {
     
     //save database
     return this.homestayService.create(dto);
+  }
+
+  @Delete(':id')
+  async delete(@Param() params){
+    return await this.homestayService.deleteThis(params.id);
   }
 }

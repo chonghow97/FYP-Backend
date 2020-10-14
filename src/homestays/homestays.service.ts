@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { create } from 'domain';
 import { Model } from 'mongoose';
-import { Homestay } from './homestay.schema';
+import { Homestay, HomestaySchema } from './homestay.schema';
 
 @Injectable()
 export class HomestaysService {
@@ -18,5 +18,13 @@ export class HomestaysService {
     const createdHomestay = new this.homestayModel(payload);
     createdHomestay.save();
     return createdHomestay;
+  }
+
+  async findOne(id: String){
+    return await this.homestayModel.findOne({_id: id});
+  }
+
+  async deleteThis(id: String){
+    return await this.homestayModel.findByIdAndDelete({_id: id});
   }
 }
