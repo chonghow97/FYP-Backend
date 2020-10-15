@@ -5,6 +5,7 @@ export class CreateAccountDto {
   readonly email: string;
   readonly phone: number;
   readonly code: string;
+  password: string;
 }
 
 export const CreateAccountSchema = Joi.object({
@@ -15,6 +16,6 @@ export const CreateAccountSchema = Joi.object({
     .required()
     .max(30),
   email: Joi.string().required(),
-  phone: Joi.number().required(),
-  code: Joi.number().required(),
+  phone: Joi.string().required(),
+  password: Joi.string().required().min(8),
 });

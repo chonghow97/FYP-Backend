@@ -3,6 +3,7 @@ import { CreateAccountDto, CreateAccountSchema } from './dto/account.dto';
 import { UsersService } from './users.service';
 import { Controller, Get, Post, Body } from '@nestjs/common';
 
+
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -12,11 +13,18 @@ export class UsersController {
     return this.usersService.getUserList();
   }
 
+  @Post('login')
+  login(@Body() payload){
+    return payload;
+  }
+
   @Post('register')
-  create(
+  async create(
     @Body(new ValidationPipe(CreateAccountSchema))
     createAccountDto: CreateAccountDto,
   ) {
-    return this.usersService.create(createAccountDto);
+      return this.usersService.create(createAccountDto);
   }
+
+  
 }

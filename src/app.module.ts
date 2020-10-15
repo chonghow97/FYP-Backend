@@ -6,11 +6,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import config from './config/keys';
 import { HomestayModule } from './homestays/homestays.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { AdminModule } from './admin/admin.module';
+
 
 @Module({
   imports: [
     UsersModule,
     HomestayModule,
+    AdminModule,
     MongooseModule.forRoot(config.MongoURI),
     MulterModule.register({
       dest: './uploads'
