@@ -1,7 +1,9 @@
+import { userLoginDTO } from './dto/userLogin.dto';
 import { ValidationPipe } from './../util/joi-validation.pipe';
 import { CreateAccountDto, CreateAccountSchema } from './dto/account.dto';
 import { UsersService } from './users.service';
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller('users')
@@ -13,9 +15,10 @@ export class UsersController {
     return this.usersService.getUserList();
   }
 
+  @UseGuards(AuthGuard('local'))
   @Post('login')
-  login(@Body() payload){
-    return payload;
+  login(@Request() req){
+    console.log(req.user,"asdasd");
   }
 
   @Post('register')
@@ -23,7 +26,7 @@ export class UsersController {
     @Body(new ValidationPipe(CreateAccountSchema))
     createAccountDto: CreateAccountDto,
   ) {
-      return this.usersService.create(createAccountDto);
+      return this.usersService.create(createAccountDto) ;
   }
 
   

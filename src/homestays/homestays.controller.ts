@@ -33,6 +33,7 @@ async findOne(@Param() params) {
     //save image
     
     //save database
+    console.log(dto);
     return this.homestayService.create(dto);
   }
 

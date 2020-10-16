@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,6 +15,7 @@ import { AdminModule } from './admin/admin.module';
     UsersModule,
     HomestayModule,
     AdminModule,
+    AuthModule,
     MongooseModule.forRoot(config.MongoURI),
     MulterModule.register({
       dest: './uploads'

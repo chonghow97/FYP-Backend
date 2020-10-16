@@ -13,7 +13,7 @@ export class HomestaysService {
   async homestayList() {
     return await this.homestayModel.find();
   }
-
+  
   async create(payload) {
     const createdHomestay = new this.homestayModel(payload);
     createdHomestay.save();
