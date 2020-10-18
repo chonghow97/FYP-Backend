@@ -17,8 +17,8 @@ export class UsersController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  login(@Request() req){
-    console.log(req.user,"asdasd");
+  login(@Body() req){
+    console.log(req,"asdasd");
   }
 
   @Post('register')
