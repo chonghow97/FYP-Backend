@@ -3,7 +3,6 @@ import { ValidationPipe } from './../util/joi-validation.pipe';
 import { CreateAccountDto, CreateAccountSchema } from './dto/account.dto';
 import { UsersService } from './users.service';
 import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller('users')
@@ -15,10 +14,9 @@ export class UsersController {
     return this.usersService.getUserList();
   }
 
-  @UseGuards(AuthGuard('local'))
   @Post('login')
-  login(@Body() req){
-    console.log(req,"asdasd");
+  async login(@Body() user:userLoginDTO){
+    return await this.usersService.login(user);
   }
 
   @Post('register')
