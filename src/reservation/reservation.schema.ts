@@ -13,6 +13,8 @@ export class Reservation extends Document{
     homestay: string;
     @Prop({ required: true })
     amount: Number;
+    @Prop({ required: true })
+    isPaid: Boolean;
 
 } 
 

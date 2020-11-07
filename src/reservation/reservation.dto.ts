@@ -4,4 +4,5 @@ export class ReservationDto{
     endDate: Date;
     homestay: string;
     amount: Number;
+    isPaid: Boolean;
 }

@@ -15,6 +15,8 @@ export class Homestay extends Document {
   price: Number;
   @Prop()
   color: String;
+  @Prop()
+  isActive: Boolean;
 }
 
 export const HomestaySchema = SchemaFactory.createForClass(Homestay);

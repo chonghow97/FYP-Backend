@@ -5,10 +5,11 @@ import { CreateAccountDto } from './dto/account.dto';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { hash, compare } from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>,private jwtService: JwtService) {}
 
   async create(createAccountDto: CreateAccountDto): Promise<string> {
     try {
@@ -31,11 +32,15 @@ export class UsersService {
   }
 
   async login(payload:userLoginDTO){
-    const user = await this.userModel.findOne({email: payload.email});
-    if(await compare(payload.password, user.password)){
-     return user;
+    const user = await (await this.userModel.findOne({email: payload.email})).toJSON();
+    const {password,...result} = user;
+    if(await compare(payload.password, password)){
+      return result;
+    //  return {
+    //   access_token: this.jwtService.sign(result),
+    // };
     }else{
-      return null;
+     return null;
     }
   }
 }

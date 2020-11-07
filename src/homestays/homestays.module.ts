@@ -12,5 +12,6 @@ import { Homestay, HomestaySchema } from './homestay.schema';
   ],
   controllers: [HomestaysController],
   providers: [HomestaysService],
+  exports: []
 })
 export class HomestayModule {}

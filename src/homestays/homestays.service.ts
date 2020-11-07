@@ -20,6 +20,23 @@ export class HomestaysService {
     return createdHomestay;
   }
 
+  async update(payload){
+    const {_id,__v,image,...result} = payload.homestay;
+    // console.log(_id,"id",result,"result");
+    this.homestayModel.findByIdAndUpdate(
+    _id,
+    result,
+    function(err, result) {
+      if (err) {
+        return "updated successfully"
+      } else {
+        return "updated successfully"
+      }
+    }
+  );
+    return "updated successfully";
+  }
+
   async findOne(id: String){
     return await this.homestayModel.findOne({_id: id});
   }
@@ -27,4 +44,6 @@ export class HomestaysService {
   async deleteThis(id: String){
     return await this.homestayModel.findByIdAndDelete({_id: id});
   }
+
+  
 }
