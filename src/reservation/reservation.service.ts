@@ -1,50 +1,28 @@
-import { HomestaysService } from './../homestays/homestays.service';
-import { BadRequestException } from '@nestjs/common/exceptions/bad-request.exception';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ReservationDto } from './reservation.dto';
 import { Reservation } from './reservation.schema';
-import { maxHeaderSize } from 'http';
-import { Homestay } from 'src/homestays/homestay.schema';
 
 @Injectable()
 export class ReservationService {
   constructor(
     @InjectModel(Reservation.name) private reservationModel: Model<Reservation>,
-    @InjectModel(Homestay.name) private homestayModel: Model<Homestay>
   ) {}
 
-
+  async getAll(){
+    return this.reservationModel.find({isPaid: true});
+  }
   async findOne(payload) {
-
-
     const {id} = payload;
     //find userid 
-    const order = await this.reservationModel.aggregate([
-
-        { $lookup: ({ from: 'homestays', localField: 'homestay', foreignField: '_id', as: 'homestay_joined' })},
-
-  
-  // { $unwind: "$homestay_joined" },
-  // {
-  //   $project: {  
-  //       "_id": 1,
-  //       "startDate": 1,
-  //       "endDate": 1,
-  //       "homestay": "$homestay_joined.name",
-  //       "amount": 1,
-  //       "isPaid": 1
-  //   }
-  // }
-]);
-    const homestay = await this.homestayModel.find({_id: "5f9f83807e7f885d78df892e"}).select("name -_id");
-    const homestayID = order.map(x=>x.homestay );
+    //5f8da6388139221af80efa35
+    const homestay = await this.reservationModel.find({"userID.id": id}).select(" -_v");
     //find homestay name
 
     //replace home
 
-    return order;
+    return homestay;
   }
 
   async validate(payload: ReservationDto) {
@@ -54,7 +32,7 @@ export class ReservationService {
     const {startDate,endDate,homestay} = newHomestay;
     //find exist homestay
     const homestays = await this.reservationModel.find({
-      homestay: homestay,
+      "homestay.id": homestay.id,
     });
 
     if(homestays.length){ //checking 

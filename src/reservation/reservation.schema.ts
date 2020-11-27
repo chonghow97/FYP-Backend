@@ -3,14 +3,14 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Reservation extends Document{
-    @Prop({ required: true })
-    userID: string;
+    @Prop()
+    userID: {id: string, name:string, contact: string};
     @Prop({ required: true })
     startDate: Date;
     @Prop({ required: true })
     endDate: Date;
-    @Prop({ required: true })
-    homestay: string;
+    @Prop()
+    homestay: {id: string, name: string};
     @Prop({ required: true })
     amount: Number;
     @Prop({ required: true })

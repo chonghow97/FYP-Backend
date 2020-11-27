@@ -9,6 +9,10 @@ import { Param } from '@nestjs/common/decorators/http/route-params.decorator';
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
+  @Get()
+  getAll(){
+    return this.reservationService.getAll();
+  }
   @Get(':id')
   findone(@Param() params) {
     return this.reservationService.findOne(params);

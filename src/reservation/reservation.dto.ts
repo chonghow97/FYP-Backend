@@ -1,8 +1,8 @@
 export class ReservationDto{
-    userID: string;
+    user: {id: string, name: string, contact: string};
     startDate: Date;
     endDate: Date;
-    homestay: string;
+    homestay: {id: string, name: string};
     amount: Number;
     isPaid: Boolean;
 }
