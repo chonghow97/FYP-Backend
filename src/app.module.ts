@@ -25,16 +25,16 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
         }),
         MailerModule.forRoot({
             transport: {
-                host: 'smtp.example.com',
-                port: 587,
-                secure: false, // upgrade later with STARTTLS
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true, // upgrade later with STARTTLS
                 auth: {
-                    user: 'username',
-                    pass: 'password',
+                    user: 'tanchonghow1997@gmail.com',
+                    pass: 'esnqdgxqejgpxnav',
                 },
             },
             defaults: {
-                from: '"nest-modules" <modules@nestjs.com>',
+                from: '"no Reply" <tanchonghow1997@gmail.com>',
             },
             template: {
                 dir: __dirname + '/templates',

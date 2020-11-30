@@ -2,21 +2,11 @@ import { userLoginDTO } from './dto/userLogin.dto';
 import { ValidationPipe } from './../util/joi-validation.pipe';
 import { CreateAccountDto, CreateAccountSchema } from './dto/account.dto';
 import { UsersService } from './users.service';
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    UseGuards,
-    Request,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
-    constructor(
-        private usersService: UsersService,
-        private readonly mailerService: MailerService,
-    ) {}
+    constructor(private usersService: UsersService) {}
 
     @Post('password')
     forgetPassword(@Body() payload) {

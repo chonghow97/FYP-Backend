@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@adyen/api-library": "^6.0.3",
+    "@crowdlinker/nestjs-mailer": "0.0.4",
     "@nestjs-modules/mailer": "^1.5.1",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
@@ -33,7 +34,7 @@
     "cors": "^2.8.5",
     "joi": "^17.2.1",
     "mongoose": "^5.10.4",
-    "nodemailer": "^6.4.13",
+    "nodemailer": "^6.4.16",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

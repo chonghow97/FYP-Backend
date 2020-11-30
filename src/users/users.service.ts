@@ -1,4 +1,3 @@
-import { MailerService } from '@nestjs-modules/mailer';
 import { userLoginDTO } from './dto/userLogin.dto';
 import { User } from './schemas/user.schema';
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
@@ -7,6 +6,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { hash, compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class UsersService {
@@ -16,29 +16,46 @@ export class UsersService {
         private readonly mailerService: MailerService,
     ) {}
 
-    async forgetPassword(payload) {
+    async forgetPassword(payload): Promise<string> {
         //find userID
-        const user = this.userModel.find({ email: payload.email }).exec();
+        const user = this.userModel
+            .find({
+                email: payload.email,
+            })
+            .exec();
         //trow error 404
         if ((await user).length !== 1)
             throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
         //generate random password
         const newPassword = Math.round(Math.random() * 100000000);
+        //encrypt it
+        const hashed = await hash(newPassword.toString(), 10);
+        //update database
+        await this.userModel.findByIdAndUpdate(
+            (await user)[0]._id,
+            { password: hashed },
+            function(err, result) {
+                if (err) {
+                    err;
+                } else {
+                    result;
+                }
+            },
+        );
         //send email
-        this.mailerService
+        this.sendEmail(payload.email, newPassword);
+        return 'Password Updated Successfully please check your email';
+    }
+
+    async sendEmail(sender, newPassword) {
+        return await this.mailerService
             .sendMail({
-                to: 'test@nestjs.com', // list of receivers
-                from: 'noreply@nestjs.com', // sender address
-                subject: 'Testing Nest MailerModule ✔', // Subject line
-                text: 'welcome', // plaintext body
-                html: `this new password is <b>${newPassword}</b>`, // HTML body content
+                to: sender, // list of receivers
+                subject: 'Password updated ✔', // Subject line
+                html: `Your new password is <b>${newPassword}</b>`, // HTML body content
             })
-            .then(() => {
-                //update password from database
-                // this.userModel.findOneAndUpdate({ email: payload.email });
-            })
+            .then(() => {})
             .catch(() => {});
-        return payload.email;
     }
 
     async create(createAccountDto: CreateAccountDto): Promise<string> {
