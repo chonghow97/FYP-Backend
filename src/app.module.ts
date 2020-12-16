@@ -30,7 +30,7 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
                 secure: true, // upgrade later with STARTTLS
                 auth: {
                     user: 'tanchonghow1997@gmail.com',
-                    pass: 'esnqdgxqejgpxnav',
+                    pass: '',
                 },
             },
             defaults: {
